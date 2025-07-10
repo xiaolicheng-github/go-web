@@ -1,6 +1,7 @@
 import type { RouteObject } from 'react-router-dom';
 import Home from '../pages/home';
 import Login from '../pages/login';
+import Register from '../pages/register';
 
 // 定义路由配置类型
 export type RouteConfig = RouteObject & {
@@ -27,6 +28,11 @@ const routes: RouteConfig[] = [
     path: '/login',
     element: <Login />,
     meta: { title: '登录', requiresAuth: false }
+  },
+  {
+    path: '/register',
+    element: <Register />,
+    meta: { title: '注册', requiresAuth: false }
   }
 ];
 export default routes;

@@ -1,6 +1,6 @@
 import { useState } from "react"
 import { Input, Button } from 'antd';
-import { userLogin } from '../../api/api';
+import { login } from '../../api/api';
 
 
 
@@ -10,7 +10,7 @@ export default function Index() {
 
 
     function handleLogin() {
-        userLogin({
+        login({
             username: 'xxxx',
             password: 'xxxxx'
         }).then(res => {
