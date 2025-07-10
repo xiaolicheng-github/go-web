@@ -1,12 +1,12 @@
 package main
 
 import (
+	"go-web/config"
 	"go-web/handlers"
 	"go-web/middleware"
 	"go-web/models"
 	"log"
 	"net/http"
-	"os"
 
 	"github.com/gin-gonic/gin"
 	"golang.org/x/sync/errgroup"
@@ -22,12 +22,11 @@ var (
 
 func webRouter() http.Handler {
 
-	if os.Getenv("GIN_MODE") != "debug" {
-		gin.SetMode(gin.ReleaseMode)
-	}
+	gin.SetMode(gin.ReleaseMode)
+
 	router := gin.New()
 
-	router.Static("/", "./web/dist")
+	router.Static("/", "./bin/web")
 
 	// 处理所有未匹配的路由，指向静态目录的index.html
 	router.NoRoute(func(c *gin.Context) {
@@ -52,7 +51,7 @@ func apiRouter() http.Handler {
 
 	// 初始化Gin路由
 	// 生产环境关闭调试模式
-	if os.Getenv("GIN_MODE") != "debug" {
+	if config.IsRelease() {
 		gin.SetMode(gin.ReleaseMode)
 	}
 	router := gin.New()
@@ -99,18 +98,23 @@ func apiRouter() http.Handler {
 }
 
 func main() {
-	webServer := &http.Server{
-		Addr:    ":4000",
-		Handler: webRouter(),
+	var webServer *http.Server
+	if config.IsRelease() {
+		webServer = &http.Server{
+			Addr:    ":4000",
+			Handler: webRouter(),
+		}
 	}
+
 	apiServer := &http.Server{
 		Addr:    ":4001",
 		Handler: apiRouter(),
 	}
-
-	g.Go(func() error {
-		return webServer.ListenAndServe()
-	})
+	if config.IsRelease() {
+		g.Go(func() error {
+			return webServer.ListenAndServe()
+		})
+	}
 
 	g.Go(func() error {
 		return apiServer.ListenAndServe()
