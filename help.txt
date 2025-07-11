@@ -1,9 +1,16 @@
-dev:
-	go run main.go
-build:
-	go build -o bin/app.exe main.go
-
-windows：
-    安装make (powershell 管理员模式运行)
-    Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1'))
-    choco install make -y
+运行环境ubuntu
+1. 安装mysql
+    打开 Ubuntu 命令行并更新可用的包： sudo apt update
+    更新包后，使用以下命令安装 MySQL： sudo apt install mysql-server
+    确认安装并获取版本号： mysql --version
+    启动 MySQL 服务器/检查状态： systemctl status mysql
+    若要打开 MySQL 提示符，请输入： sudo mysql
+    若要查看可用的数据库，请在 MySQL 提示符下输入： SHOW DATABASES;
+    若要创建新数据库，请输入： CREATE DATABASE database_name;
+    若要删除数据库，请输入： DROP DATABASE database_name;
+    启动 MySQL 服务器： sudo systemctl start mysql
+    停止 MySQL 服务器： sudo systemctl stop mysql
+    重新启动 MySQL 服务器： sudo systemctl restart mysql
+    启动安全脚本提示： sudo mysql_secure_installation
+    第一个提示将询问是否要设置 VALIDATE PASSWORD COMPONENT，该组件可用于测试 MySQL 密码强度。 如果要设置一些简单密码，则不应设置此组件。
+    然后，将为 MySQL 根用户设置/更改密码，决定是否删除匿名用户，决定是否允许根用户在本地和远程登录，决定是否删除测试数据库，最后决定是否立即重新加载特权表。

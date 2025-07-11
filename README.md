@@ -1,7 +1,8 @@
-前端： 
-    curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash
-    source ~/.bashrc 
-    nvm install --lts
-    nvm ls && nvm use xx.xxx.xx
-    安装前端依赖
-    cd web && pnpm i
+ ```shell
+    # 本地运行
+    make dev
+    # 编译前后端
+    make build
+    # 编译前后端并且启动项目
+    make run
+```
